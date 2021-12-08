@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>成功</title>
+</head>
+<body>
+<table id="table1" border="1" cellspacing="0" cellpadding="0" style="text-align: center;">
+    <tr>
+        <th colspan="5">info</th>
+    </tr>
+    <tr>
+        <td>id</td>
+        <td>lastname</td>
+        <td>email</td>
+        <td>gender</td>
+        <td>options(<a th:href="@{/toadd}">add</a>)</td>
+    </tr>
+    <tr th:each="employee : ${all}">
+        <td th:text="${employee.id}"></td>
+        <td th:text="${employee.lastName}"></td>
+        <td th:text="${employee.email}"></td>
+        <th th:text="${employee.gender}"></th>
+        <td>
+            <a @click="deleteemp" th:href="@{/employee/}+${employee.id}">delete</a>
+            <a th:href="@{/employee/}+${employee.id}">update</a>
+        </td>
+    </tr>
+</table>
+<form id="deleteform" method="post">
+    <input type="hidden" name="_method" value="delete">
+</form>
+<script type="text/javascript" th:src="@{/static/js/vue.js}"></script>
+<script type="text/javascript">
+    var vue=new vue({
+        el:"#table1",
+        methods:{
+            deleteemp:function (event) {
+                var deleteform = document.getElementById("deleteform");
+                deleteform.action=event.target.href;
+                deleteform.submit();
+                event.preventDefault();
+            }
+
+        }
+
+
+    });
+
+
+
+
+
+</script>
+</body>
+
+
+</html>
